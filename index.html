@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Help & Support Chatbot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Chat Bubble -->
+<div class="chat-bubble" id="chatBubble">💬</div>
+
+<!-- Chatbot -->
+<div class="chatbot" id="chatbot">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-left">
+      <div class="logo">✳</div>
+      <div>
+        <div class="title">Help & Support</div>
+        <div class="subtitle">Growing Legacies</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span id="minimizeBtn">—</span>
+      <span id="closeBtn">✕</span>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="chat-body" id="chatBody">
+
+    <h2>How can we help?</h2>
+
+    <div class="options">
+      <button>Our Services</button>
+      <button>Corporate</button>
+      <button>Sustainability</button>
+      <button>Investors</button>
+      <button>Vendors</button>
+      <button>Advertisers</button>
+      <button>Blogs</button>
+      <button>Career</button>
+    </div>
+
+    <div class="faq-link">Search FAQs</div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="chat-footer">
+    <label for="fileUpload" class="attach-icon">📎</label>
+    <input type="file" id="fileUpload" hidden>
+
+    <input type="text" id="userInput" placeholder="Type your message...">
+
+    <button class="send-btn" id="sendBtn">Send</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
