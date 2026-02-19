@@ -7,10 +7,8 @@ const userInput = document.getElementById("userInput");
 const chatBody = document.getElementById("chatBody");
 const fileUpload = document.getElementById("fileUpload");
 
-/* Open */
+/* Open / Close */
 chatBubble.onclick = () => chatbot.classList.add("active");
-
-/* Close */
 closeBtn.onclick = () => chatbot.classList.remove("active");
 minimizeBtn.onclick = () => chatbot.classList.remove("active");
 
@@ -26,85 +24,50 @@ function sendMessage() {
 
   addMessage(text, "user");
   userInput.value = "";
-
-  showTyping();
-
-  setTimeout(() => {
-    removeTyping();
-    addMessage("Thank you! Our team will assist you shortly.", "bot");
-  }, 1200);
 }
 
 function addMessage(text, sender) {
-  const message = document.createElement("div");
-  message.classList.add("message", sender);
-
-  const content = document.createElement("div");
-  content.classList.add("message-content");
-  content.textContent = text;
-
-  message.appendChild(content);
-  chatBody.appendChild(message);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function showTyping() {
-  const typing = document.createElement("div");
-  typing.classList.add("message", "bot");
-  typing.id = "typingIndicator";
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("message", sender);
 
   const bubble = document.createElement("div");
-  bubble.classList.add("message-content", "typing");
-  bubble.innerHTML = "<span></span><span></span><span></span>";
+  bubble.classList.add("message-content");
+  bubble.innerText = text;
 
-  typing.appendChild(bubble);
-  chatBody.appendChild(typing);
+  wrapper.appendChild(bubble);
+  chatBody.appendChild(wrapper);
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-function removeTyping() {
-  const typing = document.getElementById("typingIndicator");
-  if (typing) typing.remove();
-}
-
-/* File Upload */
+/* S3 Upload */
 fileUpload.addEventListener("change", async function () {
   const file = fileUpload.files[0];
   if (!file) return;
 
   addMessage("Uploading: " + file.name, "user");
 
-  const formData = new FormData();
-  formData.append("file", file);
-
   try {
-    const response = await fetch("/upload", {
+    const presignedRes = await fetch("/generate-presigned-url", {
       method: "POST",
-      body: formData
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fileName: file.name,
+        fileType: file.type
+      })
     });
 
-    const result = await response.json();
+    const { uploadUrl, fileUrl } = await presignedRes.json();
 
-    if (result.fileUrl) {
-      addMessage("File uploaded successfully!", "bot");
+    await fetch(uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": file.type },
+      body: file
+    });
 
-      const fileMessage = document.createElement("div");
-      fileMessage.classList.add("message", "bot");
+    addMessage("File uploaded successfully.", "bot");
+    addMessage(fileUrl, "bot");
 
-      const content = document.createElement("div");
-      content.classList.add("message-content");
-
-      const link = document.createElement("a");
-      link.href = result.fileUrl;
-      link.target = "_blank";
-      link.textContent = "View Uploaded File";
-
-      content.appendChild(link);
-      fileMessage.appendChild(content);
-      chatBody.appendChild(fileMessage);
-    }
-
-  } catch (err) {
+  } catch (error) {
     addMessage("Upload failed. Please try again.", "bot");
   }
 

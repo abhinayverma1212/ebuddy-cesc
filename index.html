@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Help & Support Chatbot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -32,22 +33,20 @@
     </div>
   </div>
 
-  <!-- Chat Messages Container -->
+  <!-- Chat Body -->
   <div class="chat-body" id="chatBody">
-      <div class="message bot">
-          <div class="message-content">
-              Hello there! 👋 I am your virtual assistant ‘eBuddy’ from CESC.
-          </div>
+    <div class="message bot">
+      <div class="message-content">
+Hello there! 👋 I am your virtual assistant <b>eBuddy</b> from CESC.
       </div>
+    </div>
   </div>
 
   <!-- Footer -->
   <div class="chat-footer">
     <label for="fileUpload" class="attach-icon">📎</label>
     <input type="file" id="fileUpload" hidden>
-
     <input type="text" id="userInput" placeholder="Type your message...">
-
     <button class="send-btn" id="sendBtn">Send</button>
   </div>
 
