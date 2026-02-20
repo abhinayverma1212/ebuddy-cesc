@@ -12,7 +12,7 @@ chatBubble.onclick = () => chatbot.classList.add("active");
 closeBtn.onclick = () => chatbot.classList.remove("active");
 minimizeBtn.onclick = () => chatbot.classList.remove("active");
 
-/* Send */
+/* Send */ 
 sendBtn.onclick = sendMessage;
 userInput.addEventListener("keypress", e => {
   if (e.key === "Enter") sendMessage();
@@ -24,6 +24,24 @@ function sendMessage() {
 
   addMessage(text, "user");
   userInput.value = "";
+
+  // Add typing indicator
+  const typingWrapper = document.createElement("div");
+  typingWrapper.classList.add("message", "bot");
+
+  const typingBubble = document.createElement("div");
+  typingBubble.classList.add("message-content");
+  typingBubble.innerText = "Typing...";
+
+  typingWrapper.appendChild(typingBubble);
+  chatBody.appendChild(typingWrapper);
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  // Simulate bot response delay
+  setTimeout(() => {
+    typingBubble.innerText = "Thanks for your message!";
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 1000);
 }
 
 function addMessage(text, sender) {
