@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Help & Support Chatbot</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- FontAwesome for microphone icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
@@ -37,7 +39,8 @@
   <div class="chat-body" id="chatBody">
     <div class="message bot">
       <div class="message-content">
-Hello there! 👋 I am your virtual assistant <b>eBuddy</b> from CESC.
+       Dear Consumer, Welcome to CESC Limited. I am Aastha, your AI-powered assistant, here to support you with 
+       your requests and ensure safe, reliable service. Please let me know how I may assist you today.
       </div>
     </div>
   </div>
@@ -46,8 +49,36 @@ Hello there! 👋 I am your virtual assistant <b>eBuddy</b> from CESC.
   <div class="chat-footer">
     <label for="fileUpload" class="attach-icon">📎</label>
     <input type="file" id="fileUpload" hidden>
-    <input type="text" id="userInput" placeholder="Type your message...">
-    <button class="send-btn" id="sendBtn">Send</button>
+    
+    <!-- Input field wrapper to show/hide -->
+    <div class="input-wrapper" id="inputWrapper">
+      <input type="text" id="userInput" placeholder="Type your message...">
+    </div>
+
+    <!-- Recording UI (hidden by default) -->
+    <div class="recording-ui" id="recordingUI">
+      <div class="recording-animation">
+        <div class="recording-dot"></div>
+        <span class="recording-timer" id="recordingTimer">0:00</span>
+      </div>
+      <div class="recording-waveform" id="waveform">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <button class="cancel-recording" id="cancelRecording">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+    
+    <!-- Audio Button (Initially visible if input is empty) -->
+    <button id="audioBtn" class="audio-btn active">
+      <i class="fa fa-microphone"></i>
+    </button>
+
+    <!-- Send Button (Initially hidden) -->
+    <button id="sendBtn" class="send-btn">
+      <i class="fas fa-paper-plane"></i>
+    </button>
   </div>
 
 </div>
